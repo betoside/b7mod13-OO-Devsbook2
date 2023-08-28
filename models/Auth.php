@@ -27,6 +27,22 @@ class Auth {
     }
 
     public function validateLogin($email, $password){
-        
+        $userDAO = new UserDaoMysql($this->pdo);
+
+        $user = $userDAO->findByemail($email);
+        if($user){
+
+            if(password_verify($password, $user->password)){
+                $token = md5(time().rand(0, 9999));
+
+                $_SESSION['token'] = $token;
+                $user->token = $token;
+                $userDAO->update($user);
+
+                return true;
+            }
+        }
+        return false;
     }
+    
 }
