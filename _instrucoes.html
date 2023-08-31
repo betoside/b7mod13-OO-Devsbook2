@@ -199,16 +199,22 @@
     <hr>
     <strong>#14: Refatorando o Auth</strong>
 
-    private $dao;
-    $this->dao = new UserDaoMysql($this->pdo);
-    $user = $this->dao->findByToken($token);
+        private $dao;
+        $this->dao = new UserDaoMysql($this->pdo);
+        $user = $this->dao->findByToken($token);
 
 
     <hr>
     <strong>#15: Estruturando Template (1/2)</strong>
 
+        assets
+        image/banner
+        imgB/...
 
-    
+        partials/footer.php
+        partials/header.php
+        partials/menu.php
+
     <hr>
     <strong>#16: Estruturando Template (2/2)</strong>
     <hr>

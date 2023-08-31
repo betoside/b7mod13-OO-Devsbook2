@@ -1,3 +1,6 @@
+<?php
+$firstName = current(explode(' ', $userInfo->name));
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,7 +14,7 @@
     <header>
         <div class="container">
             <div class="logo">
-                <a href=""><img src="<?=$base;?>/assets/images/devsbook_logo.png" /></a>
+                <a href="<?=$base;?>"><img src="<?=$base;?>/assets/images/devsbook_logo.png" /></a>
             </div>
             <div class="head-side">
                 <div class="head-side-left">
@@ -23,9 +26,9 @@
                 </div>
                 <div class="head-side-right">
                     <a href="<?=$base;?>/perfil.php" class="user-area">
-                        <div class="user-area-text">Bonieky</div>
+                        <div class="user-area-text"><?=$firstName;?></div>
                         <div class="user-area-icon">
-                            <img src="<?=$base;?>/media/avatars/avatar.jpg" />
+                            <img src="<?=$base;?>/media/avatars/<?=$userInfo->avatar;?>" />
                         </div>
                     </a>
                     <a href="<?=$base;?>/logout.php" class="user-logout">
