@@ -217,8 +217,30 @@
 
     <hr>
     <strong>#16: Estruturando Template (2/2)</strong>
+
+    Header
+        nome 
+        avatar
+
+    partials/menu.php
+    &lt;a href="&lt;?=$base;?>">
+        &lt;div class="menu-item <?=$activeMenu=='home'?'active':'';?>">
+
+
+    index.php
+    $activeMenu = 'home';
+
+    partials/menu.php
+
+
     <hr>
     <strong>#17: Corrigindo erro de clique</strong>
+
+    <script type="text/javascript" src="<?=$base;?>/assets/js/vanillaModal.js?vs=1"></script>
+    
+    // var modal = new VanillaModal();
+    console.log('vanilla');
+    
     <hr>
     <strong>#18: Página Home (1/5)</strong>
     <hr>

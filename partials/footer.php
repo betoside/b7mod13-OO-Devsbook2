@@ -7,7 +7,7 @@
         </div>
     </div>
     <script type="text/javascript" src="<?=$base;?>/assets/js/script.js"></script>
-    <script type="text/javascript" src="<?=$base;?>/assets/js/vanillaModal.js"></script>
+    <script type="text/javascript" src="<?=$base;?>/assets/js/vanillaModal.js?vs=1"></script>
 </body>
 </html>
 

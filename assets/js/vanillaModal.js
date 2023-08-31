@@ -420,4 +420,5 @@ var VanillaModal = (function () {
   }
 })();
 
-var modal = new VanillaModal();
+// var modal = new VanillaModal();
+// console.log('vanilla');
