@@ -4,18 +4,19 @@ require_once 'dao/UserDaoMysql.php';
 class Auth {
     private $pdo;
     private $base;
+    private $dao;
 
     public function __construct(PDO $pdo, $base){
         $this->pdo = $pdo;
         $this->base = $base;
+        $this->dao = new UserDaoMysql($this->pdo);
     }
 
     public function checkToken(){
         if(!empty($_SESSION['token'])){
             $token = $_SESSION['token'];
 
-            $userDAO = new UserDaoMysql($this->pdo);
-            $user = $userDAO->findByToken($token);
+            $user = $this->dao->findByToken($token);
 
             if($user){
                 return $user;
@@ -27,9 +28,7 @@ class Auth {
     }
 
     public function validateLogin($email, $password){
-        $userDAO = new UserDaoMysql($this->pdo);
-
-        $user = $userDAO->findByemail($email);
+        $user = $this->dao->findByemail($email);
         // echo '<pre>';
         // print_r($user);
         // exit;
@@ -40,7 +39,7 @@ class Auth {
 
                 $_SESSION['token'] = $token;
                 $user->token = $token;
-                $userDAO->update($user);
+                $this->dao->update($user);
 
                 return true;
             }
@@ -49,13 +48,10 @@ class Auth {
     }
 
     public function emailExists($email) {
-        $userDAO = new UserDaoMysql($this->pdo);
-        return $userDAO->findByemail($email) ? true : false;
+        return $this->dao->findByemail($email) ? true : false;
     }
 
     public function registerUser($name, $email, $password, $birthdate) {
-        $userDao = new UserDaoMysql($this->pdo);
-
         $hash = password_hash($password, PASSWORD_DEFAULT);
         $token = md5(time().rand(0, 9999));
 
@@ -66,7 +62,7 @@ class Auth {
         $newUser->birthdate = $birthdate;
         $newUser->token = $token;
 
-        $userDao->insert($newUser);
+        $this->dao->insert($newUser);
 
         $_SESSION['token'] = $token;
     }
