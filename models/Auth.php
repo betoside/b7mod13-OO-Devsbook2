@@ -30,6 +30,9 @@ class Auth {
         $userDAO = new UserDaoMysql($this->pdo);
 
         $user = $userDAO->findByemail($email);
+        // echo '<pre>';
+        // print_r($user);
+        // exit;
         if($user){
 
             if(password_verify($password, $user->password)){

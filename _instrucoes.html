@@ -184,6 +184,18 @@
     <strong>#12: Página de Cadastro (3/3)</strong>
     <hr>
     <strong>#13: Página de Logout + Bug no Login</strong>
+
+        remover o token da sessão
+
+        $_SESSION['token'] = '';
+
+        --x--
+
+        corrigir o bug no login.
+        generateUser passar password
+
+        $u->password = $array['password'] ?? '';
+        
     <hr>
     <strong>#14: Refatorando o Auth</strong>
     <hr>

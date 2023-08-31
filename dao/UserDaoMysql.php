@@ -13,6 +13,7 @@ class UserDaoMysql implements UserDAO {
         $u = new User();
         $u->id = $array['id'] ?? 0;
         $u->email = $array['email'] ?? '';
+        $u->password = $array['password'] ?? '';
         $u->name = $array['name'] ?? '';
         $u->birthdate = $array['birthdate'] ?? '';
         $u->city = $array['city'] ?? '';
@@ -50,12 +51,20 @@ class UserDaoMysql implements UserDAO {
             if ($sql->rowCount() > 0) {
                 $data = $sql->fetch(PDO::FETCH_ASSOC);
                 $user = $this->generateUser($data);
+
+                // echo '<pre>';
+                // print_r($data);
+                // print_r($user);
+                // echo 'count: '.$sql->rowCount();
+                // exit;
+    
                 return $user;
             } else {
                 return false;
             }
         }
-
+        // echo 'controle';
+        // exit;
     }
 
     public function update(User $u){
