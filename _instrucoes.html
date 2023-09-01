@@ -250,8 +250,93 @@
 
     <hr>
     <strong>#19: Feed Editor (1/2)</strong>
+
+        partials/feed-editor.php
+
+            base/
+            avatar
+            firstName
+
+            form
+            js pegando infos, enviando form
+
+
     <hr>
     <strong>#20: Feed Editor (2/2) // campo para mandar um post</strong>
+
+    --- 
+    feed_editor_action.php
+    --- 
+    &lt;?php
+    require 'config.php';
+    require 'models/Auth.php';
+    require 'dao/PostDaoMysql.php';
+    
+    $auth = new Auth($pdo, $base);
+    $userInfo = $auth->checkToken();
+    
+    $body = filter_input(INPUT_POST, 'body');
+    
+    if($body){
+    
+        $postDao = new PostDaoMysql($pdo);
+    
+        $newPost = new Post();
+        $newPost->id_user = $userInfo->id;
+        $newPost->type = 'text';
+        $newPost->created_at = date('Y-m-d H:i:s');
+        $newPost->body = $body;
+    
+        $postDao->insert($newPost);
+    }
+    
+    header('Location: '.$base);
+    exit;
+
+    --- 
+    models/Post.php
+    --- 
+    &lt;?php
+    class Post {
+        public $id;
+        public $id_user;
+        public $type; // text / photo
+        public $created_at;
+        public $body;
+    }
+    
+    interface PostDAO {
+        public function insert(Post $p);
+    }
+
+    --- 
+    dao/PostDaoMysql.php
+    --- 
+    &lt;?php
+    require_once 'models/Post.php';
+    
+    class PostDaoMysql implements PostDAO {
+    
+        private $pdo;
+    
+        public function __construct(PDO $driver) {
+            $this->pdo = $driver;
+        }
+    
+        public function insert(Post $p) {
+            $sql = $this->pdo->prepare("INSERT INTO posts (
+                id_user, type, created_at, body
+            ) VALUES (
+                :id_user, :type, :created_at, :body
+            )");
+            $sql->bindValue(":id_user", $p->id_user);
+            $sql->bindValue(":type", $p->type);
+            $sql->bindValue(":created_at", $p->created_at);
+            $sql->bindValue(":body", $p->body);
+            $sql->execute();
+        }
+    
+    }
 
     <hr>
     <strong>#21: Página Home (2/5) // exibir o feed na tela</strong>
