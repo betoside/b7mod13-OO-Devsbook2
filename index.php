@@ -10,11 +10,15 @@ $activeMenu = 'home';
 $postDao = new PostDaoMysql($pdo);
 $feed= $postDao->getHomeFeed($userInfo->id);
 
+echo '<pre>';
+print_r($feed);
+exit;
+
 require 'partials/header.php';
 require 'partials/menu.php';
 ?>
 <section class="feed mt-10">
-    
+
     <div class="row">
         <div class="column pr-5">
         

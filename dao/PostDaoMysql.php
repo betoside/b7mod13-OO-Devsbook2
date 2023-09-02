@@ -1,6 +1,7 @@
 <?php
 require_once 'models/Post.php';
 require_once 'dao/UserRelationDaoMysql.php';
+require_once 'dao/UserDaoMysql.php';
 
 class PostDaoMysql implements PostDAO {
 
@@ -31,10 +32,9 @@ class PostDaoMysql implements PostDAO {
         $urDao = new UserRelationDaoMysql($this->pdo);
         $userList = $urDao->getRelationsFrom($id_user);
 
-        echo '<pre>';
-
-        print_r($userList);
-        exit;
+        // echo '<pre>';
+        // print_r($userList);
+        // exit;
 
         // 2. pegar posts ordenados pela data
         $sql = $this->pdo->query("SELECT * FROM posts 
@@ -54,9 +54,40 @@ class PostDaoMysql implements PostDAO {
     private function _postListToObject($post_list, $id_user){
         // tem que retornar um array com varios objetos dentro dele.
         // $post_list
-        // $id_user
+        // $id_user / avatar, nome
 
         $posts = [];
+        $userDao = new UserDaoMysql($this->pdo);
+
+        foreach($post_list as $post_item){
+            $newPost = new Post();
+            $newPost->id = $post_item['id'];
+            // $newPost->id_user = $post_item['id_user'];
+            $newPost->type = $post_item['type'];
+            $newPost->created_at = $post_item['created_at'];
+            $newPost->body = $post_item['body'];
+            $newPost->mine = false;
+
+            if($post_item['id_user'] == $id_user){
+                $newPost->mine = true;
+            }
+
+            // complementar com informações adicionais
+            // informacoes do usuario
+            $newPost->user = $userDao->findById($post_item['id_user']);
+
+            // informações sobre like
+            $newPost->likeCount = 0;
+            $newPost->liked = false;
+
+            // informações sobre comments
+            $newPost->comments = [];
+
+            $posts[] = $newPost;
+
+        }
+
+
         
 
 

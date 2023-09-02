@@ -5,6 +5,8 @@ class Post {
     public $type; // text / photo
     public $created_at;
     public $body;
+    public $mine;
+    public $user;
 }
 
 interface PostDAO {
