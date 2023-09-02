@@ -10,9 +10,9 @@ $activeMenu = 'home';
 $postDao = new PostDaoMysql($pdo);
 $feed= $postDao->getHomeFeed($userInfo->id);
 
-echo '<pre>';
-print_r($feed);
-exit;
+// echo '<pre>';
+// print_r($feed);
+// exit;
 
 require 'partials/header.php';
 require 'partials/menu.php';
@@ -24,9 +24,31 @@ require 'partials/menu.php';
         
             <?php require 'partials/feed-editor.php'; ?>
 
+            <?php foreach($feed as $item): ?>
+                <?php require 'partials/feed-item.php'; ?>
+            <?php endforeach; ?>
+
         </div>
         <div class="column side pl-5">
-            222
+            
+            <div class="box banners">
+                <div class="box-header">
+                    <div class="box-header-text">Patrocinios</div>
+                    <div class="box-header-buttons">
+                        
+                    </div>
+                </div>
+                <div class="box-body">
+                    <a href=""><img src="assets/images/php-nivel-1.jpg" /></a>
+                    <a href=""><img src="assets/images/php-nivel-1.jpg" /></a>
+                </div>
+            </div>
+            <div class="box">
+                <div class="box-body m-10">
+                    Criado com ❤️ por B7Web
+                </div>
+            </div>
+            
         </div>
     </div>
 
