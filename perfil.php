@@ -20,6 +20,14 @@ $userDao = new UserDaoMysql($pdo);
 
 // pegar informações do usuario (ou o logado ou o que enviamos)
 // verificar se o cara existe
+$user = $userDao->findById($id);
+if(!$user){
+    header('Location: '.$base);
+    exit;
+}
+$dateFrom = new DateTime($user->birthdate);
+$dateTo = new DateTime('today');
+$user->ageYears = $dateFrom->diff($dateTo)->y;
 
 // pegar o feed do usuario
 
@@ -34,14 +42,14 @@ require 'partials/menu.php';
     <div class="row">
         <div class="box flex-1 border-top-flat">
             <div class="box-body">
-                <div class="profile-cover" style="background-image: url('<?=$base;?>/media/covers/cover.jpg');"></div>
+                <div class="profile-cover" style="background-image: url('<?=$base;?>/media/covers/<?=$user->cover;?>');"></div>
                 <div class="profile-info m-20 row">
                     <div class="profile-info-avatar">
-                        <img src="<?=$base;?>/media/avatars/<?=$userInfo->avatar;?>/" />
+                        <img src="<?=$base;?>/media/avatars/<?=$user->avatar;?>/" />
                     </div>
                     <div class="profile-info-name">
-                        <div class="profile-info-name-text">Bonieky Lacerda</div>
-                        <div class="profile-info-location">Campina Grande</div>
+                        <div class="profile-info-name-text"><?=$user->name;?></div>
+                        <div class="profile-info-location"><?=$user->city;?></div>
                     </div>
                     <div class="profile-info-data row">
                         <div class="profile-info-item m-width-20">
@@ -71,18 +79,25 @@ require 'partials/menu.php';
                     
                     <div class="user-info-mini">
                         <img src="<?=$base;?>/assets/images/calendar.png" />
-                        01/01/1930 (90 anos)
+                        <?=date('d/m/Y', strtotime($user->birthdate));?>
+                        (<?=$user->ageYears;?> anos)
+                        <!-- 01/01/1930 (90 anos) -->
                     </div>
 
+                    <?php if($user->city): ?>
                     <div class="user-info-mini">
                         <img src="<?=$base;?>/assets/images/pin.png" />
-                        Campina Grande, Brasil
+                        <?=$user->city;?>
+                        <!-- Campina Grande, Brasil -->
                     </div>
+                    <?php endif; ?>
 
+                    <?php if($user->work): ?>
                     <div class="user-info-mini">
                         <img src="<?=$base;?>/assets/images/work.png" />
-                        B7Web
+                        <?=$user->work;?>
                     </div>
+                    <?php endif; ?>
 
                 </div>
             </div>
