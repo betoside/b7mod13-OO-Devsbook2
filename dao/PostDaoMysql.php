@@ -30,7 +30,7 @@ class PostDaoMysql implements PostDAO {
         
         // 1. pegar a lista dos usuarios que EU/logado sigo
         $urDao = new UserRelationDaoMysql($this->pdo);
-        $userList = $urDao->getRelationsFrom($id_user);
+        $userList = $urDao->getFollowing($id_user);
 
         // echo '<pre>';
         // print_r($userList);

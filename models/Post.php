@@ -7,6 +7,9 @@ class Post {
     public $body;
     public $mine;
     public $user;
+    public $likeCount;
+    public $liked;
+    public $comments;
 }
 
 interface PostDAO {

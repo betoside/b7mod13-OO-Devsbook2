@@ -10,6 +10,10 @@ class User {
     public $avatar;
     public $cover;
     public $token;
+    public $ageYears;
+    public $followers;
+    public $following;
+    public $photos;
 }
 
 interface UserDAO {

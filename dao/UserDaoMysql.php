@@ -1,5 +1,6 @@
 <?php
 require_once 'models/User.php';
+require_once 'dao/UserRelationDaoMysql.php';
 
 class UserDaoMysql implements UserDAO {
 
@@ -9,7 +10,18 @@ class UserDaoMysql implements UserDAO {
         $this->pdo =  $driver;
     }
 
-    private function generateUser($array){
+    private function generateUser($array, $full=false){
+        // print_r($array);
+        // var_dump('pow: '.$full);
+        // if($full){
+        //     echo 'GENERATEUSER: <br>';
+        //     var_dump($full);
+        // } else {
+        //     echo 'GENERATEUSER: <br>';
+        //     var_dump($full);
+        // }
+        // exit;
+
         $u = new User();
         $u->id = $array['id'] ?? 0;
         $u->email = $array['email'] ?? '';
@@ -21,6 +33,22 @@ class UserDaoMysql implements UserDAO {
         $u->avatar = $array['avatar'] ?? '';
         $u->cover = $array['cover'] ?? '';
         $u->token = $array['token'] ?? '';
+
+        if($full){
+
+            // echo "FULL no Generate";
+            // exit;
+            // $urDaoMyql = new UserRelationDaoMysql($this->pdo);
+
+            // // followers = quem segue o usuario
+            // $u->$followers = $urDaoMyql->getFollowers($u->id);
+
+            // // following = quem o usuario segue
+            // $u->$following = $urDaoMyql->getFollowing($u->id);
+
+            // // fotos
+            // $u->$photos = [];
+        }
 
         return $u;
     }
@@ -57,7 +85,7 @@ class UserDaoMysql implements UserDAO {
         return false;
     }
 
-    public function findById($id){
+    public function findById($id, $full = false){
         if (!empty($id)) {
             $sql = $this->pdo->prepare("SELECT * FROM users WHERE id = :id");
             $sql->bindValue(":id", $id);
@@ -65,7 +93,18 @@ class UserDaoMysql implements UserDAO {
 
             if ($sql->rowCount() > 0) {
                 $data = $sql->fetch(PDO::FETCH_ASSOC);
-                $user = $this->generateUser($data);
+
+                // echo '<pre>';
+                // print_r($data);
+                // echo 'findById__ <br>';
+                // if($full == true){
+                //     var_dump($full);
+                // } else {
+                //     var_dump($full);
+                // }
+                // exit;
+
+                $user = $this->generateUser($data, 'teste1', 'teste2');
                 return $user;
             }
         }
