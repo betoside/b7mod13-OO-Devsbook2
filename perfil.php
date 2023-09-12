@@ -121,12 +121,12 @@ require 'partials/menu.php';
                     <?php if(count($user->following) > 0): ?>
                         <?php foreach($user->following as $item): ?>
                             <div class="friend-icon">
-                                <a href="">
+                                <a href="<?=$base;?>/perfil.php?id=<?=$item->id;?>">
                                     <div class="friend-icon-avatar">
-                                        <img src="<?=$base;?>/media/avatars/avatar.jpg" />
+                                        <img src="<?=$base;?>/media/avatars/<?=$item->avatar;?>" />
                                     </div>
                                     <div class="friend-icon-name">
-                                        Bonieky
+                                    <?=$item->name;?>
                                     </div>
                                 </a>
                             </div>
@@ -144,10 +144,10 @@ require 'partials/menu.php';
                 <div class="box-header m-10">
                     <div class="box-header-text">
                         Fotos
-                        <span>(12)</span>
+                        <span>(<?=count($user->photos);?>)</span>
                     </div>
                     <div class="box-header-buttons">
-                        <a href="">ver todos</a>
+                        <a href="<?=$base;?>/photos.php?id=<?=$item->id;?>">ver todos</a>
                     </div>
                 </div>
                 <div class="box-body row m-20">
