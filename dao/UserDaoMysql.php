@@ -104,7 +104,7 @@ class UserDaoMysql implements UserDAO {
                 // }
                 // exit;
 
-                $user = $this->generateUser($data, 'teste1', 'teste2');
+                $user = $this->generateUser($data, $full);
                 return $user;
             }
         }
@@ -154,6 +154,16 @@ class UserDaoMysql implements UserDAO {
         $sql->execute();
 
         return true;
+    }
+
+    public function testeParam($param1){
+
+
+
+    }
+
+    private function exibeParams($param1, $param2=false){
+
     }
 
 }
