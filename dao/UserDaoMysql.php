@@ -23,15 +23,9 @@ class UserDaoMysql implements UserDAO {
         $u->avatar = $array['avatar'] ?? '';
         $u->cover = $array['cover'] ?? '';
         $u->token = $array['token'] ?? '';
-        // $u->followers = $array['followers'] ?? '';
-        // $u->following = $array['following'] ?? '';
-        // $u->photos = $array['photos'] ?? '';
-
 
         if($full){
-
-            // echo "FULL no Generate";
-            // exit;
+            
             $urDaoMyql = new UserRelationDaoMysql($this->pdo);
 
             // // followers = quem segue o usuario
