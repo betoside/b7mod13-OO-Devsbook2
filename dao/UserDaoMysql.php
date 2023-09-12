@@ -11,16 +11,6 @@ class UserDaoMysql implements UserDAO {
     }
 
     private function generateUser($array, $full=false){
-        // print_r($array);
-        // var_dump('pow: '.$full);
-        // if($full){
-        //     echo 'GENERATEUSER: <br>';
-        //     var_dump($full);
-        // } else {
-        //     echo 'GENERATEUSER: <br>';
-        //     var_dump($full);
-        // }
-        // exit;
 
         $u = new User();
         $u->id = $array['id'] ?? 0;
@@ -33,21 +23,25 @@ class UserDaoMysql implements UserDAO {
         $u->avatar = $array['avatar'] ?? '';
         $u->cover = $array['cover'] ?? '';
         $u->token = $array['token'] ?? '';
+        // $u->followers = $array['followers'] ?? '';
+        // $u->following = $array['following'] ?? '';
+        // $u->photos = $array['photos'] ?? '';
+
 
         if($full){
 
             // echo "FULL no Generate";
             // exit;
-            // $urDaoMyql = new UserRelationDaoMysql($this->pdo);
+            $urDaoMyql = new UserRelationDaoMysql($this->pdo);
 
             // // followers = quem segue o usuario
-            // $u->$followers = $urDaoMyql->getFollowers($u->id);
+            $u->followers = $urDaoMyql->getFollowers($u->id);
 
             // // following = quem o usuario segue
-            // $u->$following = $urDaoMyql->getFollowing($u->id);
+            $u->following = $urDaoMyql->getFollowing($u->id);
 
             // // fotos
-            // $u->$photos = [];
+            $u->photos = [];
         }
 
         return $u;
@@ -93,16 +87,6 @@ class UserDaoMysql implements UserDAO {
 
             if ($sql->rowCount() > 0) {
                 $data = $sql->fetch(PDO::FETCH_ASSOC);
-
-                // echo '<pre>';
-                // print_r($data);
-                // echo 'findById__ <br>';
-                // if($full == true){
-                //     var_dump($full);
-                // } else {
-                //     var_dump($full);
-                // }
-                // exit;
 
                 $user = $this->generateUser($data, $full);
                 return $user;
@@ -154,16 +138,6 @@ class UserDaoMysql implements UserDAO {
         $sql->execute();
 
         return true;
-    }
-
-    public function testeParam($param1){
-
-
-
-    }
-
-    private function exibeParams($param1, $param2=false){
-
     }
 
 }
