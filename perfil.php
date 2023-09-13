@@ -150,18 +150,18 @@ require 'partials/menu.php';
                         <span>(<?=count($user->photos);?>)</span>
                     </div>
                     <div class="box-header-buttons">
-                        <a href="<?=$base;?>/photos.php?id=<?=$user->id;?>">ver todos</a>
+                        <a href="<?=$base;?>/fotos.php?id=<?=$user->id;?>">ver todos</a>
                     </div>
                 </div>
                 <div class="box-body row m-20">
 
                     <?php if(count($user->photos) > 0): ?>
-                        <?php foreach($user->photos as $item): ?>
+                        <?php foreach($user->photos as $key => $item): ?>
                             <div class="user-photo-item">
-                                <a href="#modal-1" rel="modal:open">
+                                <a href="#modal-<?=$key;?>" rel="modal:open">
                                     <img src="<?=$base;?>/media/uploads/<?=$item->body;?>" />
                                 </a>
-                                <div id="modal-1" style="display:none">
+                                <div id="modal-<?=$key;?>" style="display:none">
                                     <img src="<?=$base;?>/media/uploads/<?=$item->body;?>" />
                                 </div>
                             </div>
