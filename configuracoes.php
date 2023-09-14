@@ -31,13 +31,13 @@ require 'partials/menu.php';
         <label>
             Novo Avatar: <br>
             <input type="file" name="avatar"> <br>
-            <img class="mini" src="<?=$base;?>/media/covers/<?=$userInfo->cover;?>" />
+            <img class="mini" src="<?=$base;?>/media/avatars/<?=$userInfo->avatar;?>" />
         </label>
         
         <label>
             Nova Capa: <br>
             <input type="file" name="cover"> <br>
-            <img class="mini" src="<?=$base;?>/media/avatars/<?=$userInfo->avatar;?>" />
+            <img class="mini" src="<?=$base;?>/media/covers/<?=$userInfo->cover;?>" />
         </label>
 
         <hr>
