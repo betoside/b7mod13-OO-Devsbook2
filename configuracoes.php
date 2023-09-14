@@ -16,42 +16,50 @@ require 'partials/menu.php';
 
     <h1>Configurações</h1>
 
+    <?php
+    echo '<pre>';
+    print_r($userInfo);
+    echo '</pre>';
+    ?>
+
     <form class="config-form" enctype="multipart/form-data" action="configuracoes_action.php" method="POST">
         <label>
             Novo Avatar: <br>
-            <input type="file" name="avatar">
+            <input type="file" name="avatar"> <br>
+            <img class="mini" src="<?=$base;?>/media/covers/<?=$userInfo->cover;?>" />
         </label>
         
         <label>
             Nova Capa: <br>
-            <input type="file" name="cover">
+            <input type="file" name="cover"> <br>
+            <img class="mini" src="<?=$base;?>/media/avatars/<?=$userInfo->avatar;?>" />
         </label>
 
         <hr>
         
         <label>
             Nome Completo: <br>
-            <input type="text" name="name">
+            <input type="text" name="name" value="<?=$userInfo->name;?>">
         </label>
         
         <label>
             Email: <br>
-            <input type="text" name="email">
+            <input type="text" name="email" value="<?=$userInfo->email;?>">
         </label>
         
         <label>
             Data de Nascimento: <br>
-            <input type="text" name="birthdate">
+            <input type="text" id="birthdate" name="birthdate" value="<?=date('d/m/Y', strtotime($userInfo->birthdate));?>">
         </label>
         
         <label>
             Cidade: <br>
-            <input type="text" name="city">
+            <input type="text" name="city" value="<?=$userInfo->city;?>">
         </label>
         
         <label>
             Trabalho: <br>
-            <input type="text" name="work">
+            <input type="text" name="work" value="<?=$userInfo->work;?>">
         </label>
 
         <hr>
@@ -70,6 +78,15 @@ require 'partials/menu.php';
     </form>
 
 </section>
+
+
+    <script src="https://unpkg.com/imask"></script>
+    <script>
+        IMask(
+            document.getElementById('birthdate'),
+            {mask:'00/00/0000'}
+        )
+    </script>
 <?php
 require 'partials/footer.php';
 ?>

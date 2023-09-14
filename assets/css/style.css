@@ -404,6 +404,9 @@ header .head-side {
     max-width: 500px;
     padding: 10px 15px;
 }
+.config-form .mini{
+    max-height: 100px;
+}
 .button{
     border: 0;
     padding: 10px 20px;
