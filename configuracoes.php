@@ -16,10 +16,15 @@ require 'partials/menu.php';
 
     <h1>Configurações</h1>
 
+    <?php if(!empty($_SESSION['flash'])): ?>
+        <?=$_SESSION['flash'];?>
+        <?=$_SESSION['flash'] = '';?>
+    <?php endif; ?>
+
     <?php
-    echo '<pre>';
-    print_r($userInfo);
-    echo '</pre>';
+    // echo '<pre>';
+    // print_r($userInfo);
+    // echo '</pre>';
     ?>
 
     <form class="config-form" enctype="multipart/form-data" action="configuracoes_action.php" method="POST">
