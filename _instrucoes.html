@@ -466,6 +466,8 @@
     <hr>
     <strong>#35: Busca (2/2) </strong>
 
+        *ATENÇÃO COM O ARRAY no momento do PUSH
+
         $sql = $this->pdo->prepare("SELECT * FROM users 
         WHERE name LIKE :name");
         $sql->bindValue(':name', '%'.$name.'%');
