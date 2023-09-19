@@ -1,5 +1,7 @@
 <?php
-class PostLikeDaoMysql {
+require_once 'models/PostLike.php';
+
+class PostLikeDaoMysql implements PostLikeDAO {
 
     private $pdo;
 

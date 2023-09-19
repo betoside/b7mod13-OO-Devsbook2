@@ -43,6 +43,10 @@ switch($item->type){
         </div>
         <div class="feed-item-comments">
 
+            <div class="feed-item-comments-area">
+                
+            </div>
+
             <div class="fic-answer row m-height-10 m-width-20">
                 <div class="fic-item-photo">
                     <a href="<?=$base;?>/perfil.php?id=<?=$item->user->id;?>"><img src="<?=$base;?>/media/avatars/<?=$userInfo->avatar;?>" /></a>
