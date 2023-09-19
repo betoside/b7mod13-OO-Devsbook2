@@ -117,8 +117,10 @@ class PostDaoMysql implements PostDAO {
             $newPost->user = $userDao->findById($post_item['id_user'], true);
 
             // informações sobre like
-            $newPost->likeCount = $postLikeDao->getLikeCount($post_item['id_user']);
-            $newPost->liked = false;
+            $newPost->likeCount = $postLikeDao->getLikeCount($newPost->id);
+            $newPost->liked = $postLikeDao->isLiked($newPost->id, $id_user);
+            // echo $newPost->liked;
+            // exit;
 
             // informações sobre comments
             $newPost->comments = [];

@@ -16,7 +16,24 @@ class PostLikeDaoMysql {
     }
 
     public function isLiked($id_post, $id_user){
+        // echo $id_post . '<br>';
+        // echo $id_user . '<br>';
+        // exit;
+        $sql = $this->pdo->prepare("SELECT * FROM postLikes 
+            WHERE id_post = :id_post AND id_user = :id_user");
+        $sql->bindValue(":id_post", $id_post);
+        $sql->bindValue(":id_user", $id_user);
+        $sql->execute();
 
+        // echo $sql->rowCount();
+        // echo $sql;
+        // exit;
+        
+        if($sql->rowCount() > 0){
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public function likeToogle($id_post, $id_user){
