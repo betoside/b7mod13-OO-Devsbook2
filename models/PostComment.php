@@ -9,5 +9,5 @@ class PostComment{
 
 interface PostCommentDAO{
     public function getComments($id_post);
-    public function postComments(PostComment $pc);
+    public function addComments(PostComment $pc);
 }

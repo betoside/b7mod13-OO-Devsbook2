@@ -36,8 +36,16 @@ class PostCommentDaoMysql implements PostCommentDAO {
         return $array;
     }
 
-    public function postComments(PostComment $pc){
-
+    public function addComments(PostComment $pc){
+        $sql = $this->pdo->prepare("INSERT INTO postComments 
+        (id_post, id_user, created_at, body) VALUES 
+        (:id_post, :id_user, :created_at, :body)");
+        
+        $sql->bindValue(":id_post", $pc->id_post);
+        $sql->bindValue(":id_user", $pc->id_user);
+        $sql->bindValue(":created_at", $pc->created_at);
+        $sql->bindValue(":body", $pc->body);
+        $sql->execute();
     }
 
 }
