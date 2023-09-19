@@ -37,7 +37,17 @@ class PostLikeDaoMysql {
     }
 
     public function likeToogle($id_post, $id_user){
-
+        if($this->isLiked($id_post, $id_user)){
+            $sql = $this->pdo->prepare("DELETE FROM postLikes
+            WHERE id_post = :id_post AND id_user = :id_user");
+        } else {
+            $sql = $this->pdo->prepare("INSERT INTO postLikes
+            (id_post, id_user, created_at) VALUES 
+            (:id_post, :id_user, NOW())");
+        }
+        $sql->bindValue(':id_post', $id_post);
+        $sql->bindValue(':id_user', $id_user);
+        $sql->execute();
     }
 
 }
