@@ -35,7 +35,7 @@ switch($item->type){
             </div>
         </div>
         <div class="feed-item-body mt-10 m-width-20">
-            <?=nl2br($item->body);?>
+            <?=nl2br($item->body);?> (<?=$item->id;?>)
         </div>
         <div class="feed-item-buttons row mt-20 m-width-20">
             <div class="like-btn <?=$item->liked?'on':'';?>"><?=$item->likeCount;?></div>
@@ -44,7 +44,23 @@ switch($item->type){
         <div class="feed-item-comments">
 
             <div class="feed-item-comments-area">
-                
+
+            <?php foreach($item->comments as $comment): 
+                // echo '<pre>';
+                // print_r($comment);
+                // exit;
+                ?>
+                <div class="fic-item row m-height-10 m-width-20">
+                    <div class="fic-item-photo">
+                        <a href="<?=$base;?>/perfil.pgp?id=<?=$comment->id_user;?>"><img src="<?=$base;?>/media/avatars/<?=$comment->user->avatar;?>" /></a>
+                    </div>
+                    <div class="fic-item-info">
+                        <a href="<?=$base;?>/perfil.pgp?id=<?=$comment->id_user;?>"><?=$comment->user->name;?></a>
+                        <?=$comment->body;?>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+
             </div>
 
             <div class="fic-answer row m-height-10 m-width-20">
