@@ -27,6 +27,9 @@ class PostDaoMysql implements PostDAO {
     }
 
     public function getUserFeed($id_user){
+        // echo '<pre>';
+        // var_dump($id_user);
+        // exit;
         $array = [];
         
         $sql = $this->pdo->prepare("SELECT * FROM posts 
@@ -73,17 +76,23 @@ class PostDaoMysql implements PostDAO {
 
     public function getPhotosFrom($id_user){
         $array = [];
-
+        
         $sql = $this->pdo->prepare("SELECT * FROM posts 
-            WHERE id_user = :id_user AND type = 'photo'
+            WHERE id_user = :id_user 
+            AND type = 'photo'
             ORDER BY created_at DESC");
+
         $sql->bindValue(":id_user", $id_user);
         $sql->execute();
-
+        
         if ($sql->rowCount() > 0) {
             $data = $sql->fetchAll(PDO::FETCH_ASSOC);
             // 3. transformar o resultado em objetos
             $array = $this->_postListToObject($data, $id_user);
+            // echo '<pre>';
+            // var_dump($id_user) . '<br>';
+            // var_dump($sql);
+            // exit;
         }
 
         return $array;
@@ -93,12 +102,13 @@ class PostDaoMysql implements PostDAO {
         // tem que retornar um array com varios objetos dentro dele.
         // $post_list
         // $id_user / avatar, nome
-
+        
+        
         $posts = [];
         $userDao = new UserDaoMysql($this->pdo);
         $postLikeDao = new PostLikeDaoMysql($this->pdo);
         $PostCommentDaoMysql = new PostCommentDaoMysql($this->pdo);
-
+        
         foreach($post_list as $post_item){
             $newPost = new Post();
             $newPost->id = $post_item['id'];
@@ -107,17 +117,21 @@ class PostDaoMysql implements PostDAO {
             $newPost->created_at = $post_item['created_at'];
             $newPost->body = $post_item['body'];
             $newPost->mine = false;
-
+            
             if($post_item['id_user'] == $id_user){
                 $newPost->mine = true;
             }
-
+            
             // complementar com informações adicionais
             // informacoes do usuario
             // echo 'teste';
             // exit;
-            $newPost->user = $userDao->findById($post_item['id_user'], true);
-
+            // echo '<pre>';
+            // var_dump($post_list) . '<br>';
+            // var_dump($post_item);
+            // exit;
+            $newPost->user = $userDao->findById($post_item['id_user']);
+            
             // informações sobre like
             $newPost->likeCount = $postLikeDao->getLikeCount($newPost->id);
             $newPost->liked = $postLikeDao->isLiked($newPost->id, $id_user);
@@ -128,14 +142,7 @@ class PostDaoMysql implements PostDAO {
             $newPost->comments = $PostCommentDaoMysql->getComments($newPost->id);
 
             $posts[] = $newPost;
-
         }
-
-
-        
-
-
-
         return $posts;
     }
 }

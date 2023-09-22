@@ -24,13 +24,15 @@ class UserDaoMysql implements UserDAO {
         $u->avatar = $array['avatar'] ?? '';
         $u->cover = $array['cover'] ?? '';
         $u->token = $array['token'] ?? '';
+        // $u->photos =  $array['photos'] ?? [];
 
         if($full){
             
             $urDaoMyql = new UserRelationDaoMysql($this->pdo);
-            $PostDaoMysql = new PostDaoMysql($this->pdo);
+            $postDao = new PostDaoMysql($this->pdo);
 
             // // followers = quem segue o usuario
+            // $u->followers = [];
             $u->followers = $urDaoMyql->getFollowers($u->id);
             foreach($u->followers as $key => $follower_id){
                 $newUser = $this->findById($follower_id);
@@ -38,15 +40,36 @@ class UserDaoMysql implements UserDAO {
             }
 
             // // following = quem o usuario segue
+            // $u->following = [];
             $u->following = $urDaoMyql->getFollowing($u->id);
             foreach($u->following as $key => $following_id){
                 $newUser = $this->findById($following_id);
                 $u->following[$key] = $newUser;
             }
+            // echo '<pre>';
+            // var_dump($array) . '<br>';
+            // var_dump($full);
+            // exit;
+
+            // echo 'ID, generate: '.$full.'<br><pre>';
+            // var_dump($u->following);
+            // exit;
 
             // // fotos
             // $u->photos = [];
-            $u->photos = $PostDaoMysql->getPhotosFrom($u->id);
+            // $u->photos = [
+            //     [
+            //         'id' => '28', 
+            //         'id_user' => '17', 
+            //         'type' => 'photo', 
+            //         'created_at' => '2023-09-21 05:08:21', 
+            //         'body' => 'cab082c0d7b56cb31fd37388bae7c74e.jpg'
+            //     ]
+            // ];
+            $u->photos = $postDao->getPhotosFrom($u->id);
+            // echo '<pre>';
+            // print_r($u->photos);
+            // exit;
         }
 
         return $u;
@@ -89,11 +112,13 @@ class UserDaoMysql implements UserDAO {
             $sql = $this->pdo->prepare("SELECT * FROM users WHERE id = :id");
             $sql->bindValue(":id", $id);
             $sql->execute();
-
+            
             if ($sql->rowCount() > 0) {
                 $data = $sql->fetch(PDO::FETCH_ASSOC);
-
+                
                 $user = $this->generateUser($data, $full);
+                // echo 'ID, dentro'.$id;
+                // exit;
                 return $user;
             }
         }

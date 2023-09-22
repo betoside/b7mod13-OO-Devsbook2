@@ -5,10 +5,13 @@ require_once 'dao/PostDaoMysql.php';
 
 $auth = new Auth($pdo, $base);
 $userInfo = $auth->checkToken();
+// echo '<pre>';
+// var_dump($userInfo);
+// exit;
 $activeMenu = 'home';
 
 $postDao = new PostDaoMysql($pdo);
-$feed= $postDao->getHomeFeed($userInfo->id);
+$feed = $postDao->getHomeFeed($userInfo->id);
 
 // echo '<pre>';
 // print_r($feed);

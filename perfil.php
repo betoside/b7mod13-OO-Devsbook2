@@ -19,7 +19,6 @@ if(!$id){
 if($id != $userInfo->id){
     $activeMenu = '';
 }
-
 $postDao = new PostDaoMysql($pdo);
 $userDao = new UserDaoMysql($pdo);
 $userRelationDao = new UserRelationDaoMysql($pdo);
@@ -27,6 +26,8 @@ $userRelationDao = new UserRelationDaoMysql($pdo);
 // pegar informações do usuario (ou o logado ou o que enviamos)
 // verificar se o cara existe
 $user = $userDao->findById($id, true);
+// echo 'Aqui';
+// exit;
 if(!$user){
     header('Location: '.$base);
     exit;

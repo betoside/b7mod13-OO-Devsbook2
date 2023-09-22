@@ -4,7 +4,6 @@
         <div class="feed-new-editor m-10 row">
             <div class="feed-new-avatar">
                 <img src="<?=$base;?>/media/avatars/<?=$userInfo->avatar;?>" />
-                
             </div>
             <div class="feed-new-input-placeholder">O que você está pensando, <?=$firstName;?>?</div>
             <div class="feed-new-input" contenteditable="true"></div>
