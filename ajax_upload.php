@@ -22,11 +22,14 @@ if(isset($_FILES['photo']) && !empty($_FILES['photo']['tmp_name'])){
         $ratio = $widthOrig / $heightOrig;
 
         $newWidth = $maxWidth;
-        $newHeight = $newWidth / $ratio;
+        $newHeight = $maxHeight;
+        $ratioMax = $maxWidth / $newHeight;
 
-        if($newHeight < $maxHeight){
-            $newHeight = $maxHeight;
-            $newWidth = $newHeight / $ratio;
+        if($ratioMax < $ratio){
+            $newWidth = $newHeight * $ratio;
+        } else {
+            $newHeight = $newWidth / $ratio;
+
         }
 
         $finalImage = imagecreatetruecolor($newWidth, $newHeight);
